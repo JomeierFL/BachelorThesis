@@ -308,7 +308,7 @@ def test():
 metaFile = open("IOHprofiler_f1_DIM%d_i1_mu%d_c%d_s%d_%s.info" % (N,mu,c_,s,algo), "a")
 dataFile = open("IOHprofiler_f1_DIM%d_i1_mu%d_c%d_s%d_%s.dat" % (N,mu,c_,s,algo), "a")
 
-metaFile.write("suite = 'PBO', funcId = 1, DIM = %d, algId = '%d+1-%s c = %.3f'\n%%\ndata_f1/IOHprofiler_f1_DIM%d_i1_mu%d_c%d_s%d_%s.dat, " % (N,mu,algo,c,s,N,mu,c_,s,algo))
+metaFile.write("suite = 'PBO', funcId = 1, DIM = %d, algId = '%d+1-%s c = %.3f'\n%%\ndata_f1/IOHprofiler_f1_DIM%d_i1_mu%d_c%d_s%d_%s.dat, " % (N,mu,algo,c,N,mu,c_,s,algo))
 
 test()
 
