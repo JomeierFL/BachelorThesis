@@ -4,16 +4,16 @@ import os
 from decimal import Decimal
 
 #Mode: Pareto, Exponential, OneMax or dynamic BinVal? 
-mode = "BinVal"
+mode = "Pareto"
 
 #EA, GA or GAVAR?
 algo = "EA"
 
 #Population size
-mu = 2
+mu = 1
 
 #dimension
-N = 3000
+N = 200
 
 #mutation rate, just modify c. It is divided by 100, 
 c_ = 100
@@ -21,10 +21,11 @@ c = c_/100.0
 rate = c/N
 
 #over how many rounds do we average?
-numRounds = 30
+numRounds = 5
 
 #iteration limit
-limit = 100 * np.exp(c) / c * N * np.log(N)
+limit_ = 100
+limit = limit_ * np.exp(c) / c * N * np.log(N)
 
 #parameters for pareto distribution
 beta = 0.5
@@ -36,7 +37,8 @@ lam = 0.1
 #we change the weights every s rounds
 s = 1
 
-
+#Which part
+part = 1
 
 
 #weights for Exponential, Pareto and OneMax
@@ -57,8 +59,8 @@ pop = np.random.randint(0,2,(mu,N))
 f = np.zeros(mu)
 
 #two files to write output into
-metaFile = open("IOHprofiler_f1_DIM%d_i1_mu%d_c%d_s%d_%s.info" % (N,mu,c_,s,algo), "a")
-dataFile = open("IOHprofiler_f1_DIM%d_i1_mu%d_c%d_s%d_%s.dat" % (N,mu,c_,s,algo), "a")
+metaFile = open("IOHprofiler_f1_DIM%d_i1_mu%d_c%d_s%d_limit%d_%s_part%d.info" % (N,mu,c_,s,limit_,algo,part), "a")
+dataFile = open("IOHprofiler_f1_DIM%d_i1_mu%d_c%d_s%d_limit%d_%s_part%d.dat" % (N,mu,c_,s,limit_,algo,part), "a")
 
 
 #get a N-dimensional vector with values distributed according to Par(beta,xmin)
@@ -305,10 +307,10 @@ def test():
         metaFile.write("%s%s%s%s, " % ("1:", rounds, "|" , f"{Decimal(maxSoFar.item()):.5e}"))
 
 
-metaFile = open("IOHprofiler_f1_DIM%d_i1_mu%d_c%d_s%d_%s.info" % (N,mu,c_,s,algo), "a")
-dataFile = open("IOHprofiler_f1_DIM%d_i1_mu%d_c%d_s%d_%s.dat" % (N,mu,c_,s,algo), "a")
+metaFile = open("IOHprofiler_f1_DIM%d_i1_mu%d_c%d_s%d_limit%d_%s_part%d.info" % (N,mu,c_,s,limit_,algo,part), "a")
+dataFile = open("IOHprofiler_f1_DIM%d_i1_mu%d_c%d_s%d_limit%d_%s_part%d.dat" % (N,mu,c_,s,limit_,algo,part), "a")
 
-metaFile.write("suite = 'PBO', funcId = 1, DIM = %d, algId = '%d+1-%s c = %.3f'\n%%\ndata_f1/IOHprofiler_f1_DIM%d_i1_mu%d_c%d_s%d_%s.dat, " % (N,mu,algo,c,N,mu,c_,s,algo))
+metaFile.write("suite = 'PBO', funcId = 1, DIM = %d, algId = '%d+1-%s c = %.3f'\n%%\ndata_f1/IOHprofiler_f1_DIM%d_i1_mu%d_c%d_s%d_limit%d_%s_part%d.dat, " % (N,mu,algo,c,N,mu,c_,s,limit_,algo,part))
 
 test()
 
